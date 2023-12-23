@@ -69,7 +69,7 @@ resource "aws_instance" "frontend" {
   ami                    = data.aws_ami.shopping_ami.id
   instance_type          = var.instance_type
   key_name               = aws_key_pair.shopping_auth.key_name
-  vpc_security_group_ids = [shopping_security_group.id]
+  vpc_security_group_ids = [resource.aws_security_group.shopping_security_group.id]
   tags = {
     "Name" = "${var.project_name}-${var.project_env}-frontend"
   }
