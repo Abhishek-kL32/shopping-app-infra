@@ -1,5 +1,5 @@
 ---
-name: "dev image build and deploy"
+name: "dev infra deploy"
 
 on:
   push:
