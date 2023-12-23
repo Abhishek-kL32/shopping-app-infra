@@ -1,0 +1,46 @@
+---
+name: "prod image build and deploy"
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      packer_version: "1.9.4"
+      AWS_ACCESS_KEY_ID: ${{ secrets.PROD_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_SECRET_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.PROD_REGION }}
+
+    steps:
+
+      - name: "Checkout my repo"
+        uses: actions/checkout@v3
+
+      - name: "install terraform"
+        uses: hashicorp/setup-terraform@v3
+
+      - name: "terraform init"
+        run: |
+          terraform init \
+                -backend-config="bucket=${{ secrets.PROD_BACKEND_S3}}" \
+                -backend-config="key=terraform.tfstate" \
+                -backend-config="region=${{ secrets.REGION_S3" \
+                -backend-config="access_key=${{secrets.PROD_ACCESS_KEY}} \
+                -backend-config="secret_key=${{secrets.PROD_SECRET_KEY}}
+
+
+      - name: "terraform validate"
+        run: terraform validate -var-file=prod.tfvars
+
+        
+      - name: "terraform format template"
+        run: terraform fmt
+        
+      - name: "terraform apply"
+        run: terraform apply -var-file=prod.tfvars
+
+

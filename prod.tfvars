@@ -1,0 +1,5 @@
+project_name = "shopping"
+project_env = "prod"
+hosted_zone_name = "abhishekkrishna.site"
+hostname = "shopping"
+instance_type = "t2.micro"
