@@ -18,3 +18,9 @@ data "aws_ami" "shopping_ami" {
     values = ["${var.project_name}"]
   }
 }
+
+data "aws_route53_zone" "zone-details" {
+  name         = var.hosted_zone_name
+  private_zone = false
+}
+
