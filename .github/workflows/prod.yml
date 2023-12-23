@@ -1,5 +1,5 @@
 ---
-name: "prod image build and deploy"
+name: "production infra build and deploy"
 
 on:
   push:
@@ -26,21 +26,23 @@ jobs:
       - name: "terraform init"
         run: |
           terraform init \
-                -backend-config="bucket=${{ secrets.PROD_BACKEND_S3}}" \
+                -backend-config="bucket=${{ secrets.PROD_BACKEND_S3 }}" \
                 -backend-config="key=terraform.tfstate" \
-                -backend-config="region=${{ secrets.REGION_S3" \
-                -backend-config="access_key=${{secrets.PROD_ACCESS_KEY}} \
-                -backend-config="secret_key=${{secrets.PROD_SECRET_KEY}}
+                -backend-config="region=${{ secrets.REGION_S3 }}" \
+                -backend-config="access_key=${{ secrets.PROD_ACCESS_KEY }}" \
+                -backend-config="secret_key=${{ secrets.PROD_SECRET_KEY }}" \
 
 
       - name: "terraform validate"
-        run: terraform validate -var-file=prod.tfvars
-
+        run: terraform validate 
         
       - name: "terraform format template"
         run: terraform fmt
+
+      - name: "terraform plan"
+        run: terraform plan -var-file=prod.tfvars
         
       - name: "terraform apply"
-        run: terraform apply -var-file=prod.tfvars
+        run: terraform apply -auto-approve -var-file=prod.tfvars
 
 
