@@ -1,5 +1,5 @@
 ---
-name: "production infra build and deploy"
+name: "production infra deploy"
 
 on:
   push:
