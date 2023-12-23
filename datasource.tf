@@ -4,8 +4,8 @@ data "aws_ami" "shopping_ami" {
   owners           = ["self"]
 
   filter {
-    name   = "name"
-    values = ["${var.project_name}-${var.project_env}-*"]
+    name   = "Name"
+    values = ["${var.project_name}-${var.project_env}*"]
   }
 
   filter {
