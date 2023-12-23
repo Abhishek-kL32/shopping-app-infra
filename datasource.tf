@@ -19,8 +19,8 @@ data "aws_ami" "shopping_ami" {
   }
 }
 
-data "aws_route53_zone" "zone-details" {
-  name         = var.hosted_zone_name
-  private_zone = false
-}
+#data "aws_route53_zone" "zone-details" {
+#  name         = var.hosted_zone_name
+#  private_zone = false
+#}
 
